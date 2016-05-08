@@ -1,7 +1,8 @@
-$(function() {
+$(document).ready(function() {
 
 	var seatNumber;
 	var selectedSeat;
+	var name;
 
 	$("form").hide();
 	$(".available").on("click", function() {
@@ -9,26 +10,19 @@ $(function() {
 		selectedSeat = $(this);
 		seatNumber = $(this).attr("id");
 		$(".yourSeat").text("seat #" + seatNumber + ":");
-
 	});
 
-	var reservation = {
-
-	};
-
 	$("#button").on("click", function() {
-		reservation.name = $("#name").val();
-		reservation.phone = $("#phone_number").val();
-		reservation.email = $("#email").val();
-		reservation.yourSeat = $(".yourSeat").text();
-
-		$("#formArea").html("<p>Thank you for your reservation!</p>");
-
-		$(selectedSeat).css("background-color" , "#909090")
+		name = $("#name").val();
+		$("#thanks").html("<p>Thank you for your reservation!</p>");
+		$(selectedSeat).removeClass("available").addClass("reserved")
 			.unwrap()
-			.html("<p id = 'reservedSeat'></p>");
-
-		$("#reservedSeat").text("seat #" + seatNumber + " " + reservation.name);
+			.html("<p id='reservedSeat'></p>");
+		$("#reservedSeat").text("Seat reserved for " + name);
+		$("#name").val("");
+		$("#email").val("");
+		$("#phone_number").val("");
+		$("html, body").animate({ scrollTop: 0 }, 500);
 	});
 
 });
